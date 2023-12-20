@@ -73,7 +73,7 @@ class ProductScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     product.description,
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.caption,
                   ),
                 ],
               ),

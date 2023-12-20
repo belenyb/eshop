@@ -12,6 +12,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO crear login y conectarlo al de fakeapi
+    // TODO use ratings package for star rating in detail
+    // TODO empty cart button + functionality
     final AppProvider apiProvider =
         Provider.of<AppProvider>(context, listen: false);
     return Scaffold(

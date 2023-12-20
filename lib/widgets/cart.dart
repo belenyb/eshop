@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/cart.dart';
-import '../resources/api_provider.dart';
-import '../screens/cart.dart';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../resources/api_provider.dart';
+import '../resources/app_provider.dart';
 import '../screens/cart.dart';
 
 class CartButton extends StatelessWidget {
@@ -33,7 +28,7 @@ class CartButton extends StatelessWidget {
             color: Colors.black,
             size: 40,
           ),
-          Consumer<ApiProvider>(
+          Consumer<AppProvider>(
             builder: (context, apiProvider, child) {
               final List<Item> cartItems = apiProvider.cart.items;
 
@@ -46,10 +41,11 @@ class CartButton extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.all(5),
                   decoration: const BoxDecoration(
-                      color: Colors.redAccent, shape: BoxShape.circle),
+                      color: Color.fromARGB(255, 183, 0, 0),
+                      shape: BoxShape.circle),
                   child: Text(
                     totalQuantity.toString(),
-                    style: theme.textTheme.labelSmall!
+                    style: theme.textTheme.labelMedium!
                         .copyWith(color: Colors.white),
                   ),
                 );
@@ -63,44 +59,3 @@ class CartButton extends StatelessWidget {
     );
   }
 }
-
-
-// class CartButton extends StatelessWidget {
-//   const CartButton({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final ThemeData theme = Theme.of(context);
-//     final List cartItems =
-//         Provider.of<ApiProvider>(context).cart.items;
-//     return GestureDetector(
-//       onTap: () => Navigator.push(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => const CartScreen(),
-//         ),
-//       ),
-//       child: Stack(
-//         alignment: Alignment.bottomRight,
-//         children: [
-//           const Icon(
-//             Icons.shopping_cart_outlined,
-//             color: Colors.black,
-//             size: 40,
-//           ),
-//           if (cartItems.isNotEmpty)
-//             Container(
-//               padding: const EdgeInsets.all(5),
-//               decoration: const BoxDecoration(
-//                   color: Colors.redAccent, shape: BoxShape.circle),
-//               child: Text(cartItems[0].quantity.toString(),
-//                   style: theme.textTheme.labelSmall!
-//                       .copyWith(color: Colors.white)),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }

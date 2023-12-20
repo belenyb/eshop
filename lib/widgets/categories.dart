@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/screens/products_by_category.dart';
 import 'package:flutter/material.dart';
 
-import '../resources/api_provider.dart';
+import '../resources/app_provider.dart';
 import '../utils/utils.dart';
 
 class CategoriesWidget extends StatelessWidget {
@@ -10,7 +10,7 @@ class CategoriesWidget extends StatelessWidget {
     required this.apiProvider,
   }) : super(key: key);
 
-  final ApiProvider apiProvider;
+  final AppProvider apiProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +49,16 @@ class CategoriesWidget extends StatelessWidget {
                         margin: const EdgeInsets.all(4),
                         width: (MediaQuery.of(context).size.width / 4) - 16,
                         decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.shade300,
-                          offset: const Offset(2, 2),
-                          spreadRadius: 1,
-                          blurRadius: 16)
-                    ]),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade300,
+                                  offset: const Offset(2, 2),
+                                  spreadRadius: 1,
+                                  blurRadius: 16)
+                            ]),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

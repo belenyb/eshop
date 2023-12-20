@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/resources/api_provider.dart';
+import 'package:ecommerce_app/resources/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +13,8 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final ApiProvider apiProvider =
-        Provider.of<ApiProvider>(context, listen: false);
+    final AppProvider apiProvider =
+        Provider.of<AppProvider>(context, listen: false);
     int productQuantity = 1;
     return Scaffold(
       appBar: AppBar(title: const Text("Detail")),
@@ -22,57 +22,61 @@ class ProductScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Image.network(
-                    product.image,
-                    height: 300,
+            SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.network(
+                      product.image,
+                      height: 300,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  decoration: const BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                    decoration: const BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: Text(product.category),
                   ),
-                  child: Text(product.category),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        product.title,
-                        style: theme.textTheme.headline6,
-                        softWrap: true,
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          product.title,
+                          style: theme.textTheme.headline6,
+                          softWrap: true,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      "\$${product.price.toString()}",
-                      style: theme.textTheme.headline6,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text("⭐⭐⭐⭐⭐"),
-                    Text(product.rating.rate.toString()),
-                    Text(" (${product.rating.count.toString()} ratings)"),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  product.description,
-                  style: theme.textTheme.bodyMedium,
-                ),
-              ],
+                      const SizedBox(width: 12),
+                      Text(
+                        "\$${product.price.toString()}",
+                        style: theme.textTheme.headline6,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Text("⭐⭐⭐⭐⭐"),
+                      Text(product.rating.rate.toString()),
+                      Text(" (${product.rating.count.toString()} ratings)"),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    product.description,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
             Flexible(
               child: Row(
@@ -90,13 +94,15 @@ class ProductScreen extends StatelessWidget {
                       'Add to cart',
                     ),
                     onPressed: () {
-                      apiProvider.addToCart(Item(
-                        id: product.id,
-                        title: product.title,
-                        price: product.price,
-                        image: product.image,
-                        quantity: productQuantity,
-                      ));
+                      apiProvider.addToCart(
+                          Item(
+                            id: product.id,
+                            title: product.title,
+                            price: product.price,
+                            image: product.image,
+                            quantity: productQuantity,
+                          ),
+                          context);
                     },
                   ),
                 ],

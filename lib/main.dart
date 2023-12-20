@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'resources/api_provider.dart';
+import 'resources/app_provider.dart';
 import 'screens/home.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ApiProvider(),
+      create: (context) => AppProvider(),
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
             primary: Colors.black,
             background: Colors.red,
             brightness: Brightness.light,
-            error: Colors.green,
+            error: Color.fromARGB(255, 177, 12, 0),
             onBackground: Colors.white,
             onError: Colors.black,
             onPrimary: Colors.white,

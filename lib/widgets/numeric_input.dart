@@ -33,6 +33,7 @@ class _NumericInputState extends State<NumericInput> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(

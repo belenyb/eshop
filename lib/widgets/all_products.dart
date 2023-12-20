@@ -1,11 +1,11 @@
-import 'package:ecommerce_app/resources/api_provider.dart';
+import 'package:ecommerce_app/resources/app_provider.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import '../widgets/product.dart';
 
 class AllProducts extends StatelessWidget {
-  final ApiProvider apiProvider;
+  final AppProvider apiProvider;
   int? itemCount;
   AllProducts({super.key, required this.apiProvider, this.itemCount});
 

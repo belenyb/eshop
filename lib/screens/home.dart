@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../resources/api_provider.dart';
+import '../resources/app_provider.dart';
 import '../widgets/all_products.dart';
 import '../widgets/cart.dart';
 import '../widgets/categories.dart';
@@ -12,12 +12,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ApiProvider apiProvider =
-        Provider.of<ApiProvider>(context, listen: false);
+    final AppProvider apiProvider =
+        Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        automaticallyImplyLeading: false,
         title: Image.asset(
           'assets/images/eshop-logo.png',
           fit: BoxFit.fitHeight,
@@ -27,6 +26,7 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         actions: const [
           CartButton(),
+          SizedBox(width: 16),
         ],
       ),
       body: Container(

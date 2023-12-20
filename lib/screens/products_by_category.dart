@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/resources/api_provider.dart';
+import 'package:ecommerce_app/resources/app_provider.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
@@ -7,7 +7,7 @@ import '../widgets/product.dart';
 
 class ProductsByCategoryScreen extends StatelessWidget {
   final String category;
-  final ApiProvider apiProvider;
+  final AppProvider apiProvider;
   const ProductsByCategoryScreen(
       {super.key, required this.category, required this.apiProvider});
 

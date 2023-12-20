@@ -18,7 +18,7 @@ class Cart {
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         id: json["id"],
         date: DateTime.parse(json["date"]),
-        items: List<Item>.from(json["products"].map((x) => Item.fromJson(x))),
+        items: json["items"] == [] ? [] : List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

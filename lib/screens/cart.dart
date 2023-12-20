@@ -1,6 +1,7 @@
+import 'package:ecommerce_app/resources/api_provider.dart';
 import 'package:ecommerce_app/widgets/numeric_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../models/cart.dart';
 
 class CartScreen extends StatelessWidget {
@@ -9,26 +10,30 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-
-    Future<String> readJson() async {
-      final String response =
-          await rootBundle.loadString('assets/json/local_cart.json');
-      return response;
-    }
+    final ApiProvider apiProvider =
+        Provider.of<ApiProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Cart")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: FutureBuilder(
-          future: readJson(),
+          future: apiProvider.getCart(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              final Cart cart = Cart.fromRawJson(snapshot.data);
-              final List<Item> cartItems = cart.items;
-              return ListView.builder(
+              final List<Item> cartItems = snapshot.data.items;
+              return cartItems.isEmpty
+              ? Center(child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.production_quantity_limits),
+                  const SizedBox(width: 8),
+                  Text("Shopping cart is empty", style: theme.textTheme.labelLarge),
+                ],
+              ))
+              : ListView.builder(
                 itemCount: cartItems.length,
                 itemBuilder: (BuildContext context, int index) {
                   final Item cartItem = cartItems[index];
@@ -76,8 +81,8 @@ class CartScreen extends StatelessWidget {
                                         const SizedBox(height: 8),
                                         Text(
                                           "\$${cartItem.price.toString()}",
-                                          style:
-                                              theme.textTheme.bodyLarge!.copyWith(
+                                          style: theme.textTheme.bodyLarge!
+                                              .copyWith(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -87,7 +92,10 @@ class CartScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            NumericInput(onChanged: (value) {}),
+                            NumericInput(
+                              initialValue: cartItem.quantity,
+                              onChanged: (value) {},
+                            ),
                           ],
                         ),
                       ),

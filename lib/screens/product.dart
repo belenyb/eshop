@@ -1,5 +1,8 @@
+import 'package:ecommerce_app/resources/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/cart.dart';
 import '../models/product.dart';
 import '../widgets/numeric_input.dart';
 
@@ -10,11 +13,11 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    int yourLocalVariable;
+    final ApiProvider apiProvider =
+        Provider.of<ApiProvider>(context, listen: false);
+    int productQuantity = 1;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Detail")
-      ),
+      appBar: AppBar(title: const Text("Detail")),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -79,14 +82,22 @@ class ProductScreen extends StatelessWidget {
                 children: [
                   NumericInput(
                     onChanged: (value) {
-                      yourLocalVariable = value;
+                      productQuantity = value;
                     },
                   ),
                   ElevatedButton(
                     child: const Text(
                       'Add to cart',
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      apiProvider.addToCart(Item(
+                        id: product.id,
+                        title: product.title,
+                        price: product.price,
+                        image: product.image,
+                        quantity: productQuantity,
+                      ));
+                    },
                   ),
                 ],
               ),

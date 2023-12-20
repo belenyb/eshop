@@ -10,6 +10,15 @@ import '../models/product.dart';
 
 class ApiProvider extends ChangeNotifier {
   static const baseUrl = "fakestoreapi.com";
+  Cart _cart = Cart(id: 1, date: DateTime.now(), items: []);
+
+  get cart => _cart;
+
+  void addToCart(Item item) {
+    //TODO if item already exists in cart, put snackbar and prevent adding to cart
+    _cart.items.add(item);
+    notifyListeners();
+  }
 
   Future<List> getCategories() async {
     final url = Uri.https(baseUrl, '/products/categories');
@@ -74,20 +83,8 @@ class ApiProvider extends ChangeNotifier {
     return products;
   }
 
-  Future<List<Cart>> getUserCart(userId) async {
-    final url = Uri.https(baseUrl, '/carts/user/$userId');
-    List<Cart> carts = [];
-    try {
-      final Response response = await http.get(url);
-      final responseBody = json.decode(response.body);
-      for (var cart in responseBody) {
-        final tempCart = Cart.fromJson(cart);
-        carts.add(tempCart);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    print(carts[0].toRawJson());
-    return carts;
+  Future<Cart> getCart() async {
+    _cart = cart;
+    return cart;
   }
 }

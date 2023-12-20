@@ -4,12 +4,14 @@ class NumericInput extends StatefulWidget {
   final int minValue;
   final int maxValue;
   final ValueChanged<int> onChanged;
+  final int? initialValue;
 
   const NumericInput(
       {Key? key,
       this.minValue = 1,
       this.maxValue = 10,
-      required this.onChanged})
+      required this.onChanged,
+      this.initialValue})
       : super(key: key);
 
   @override
@@ -19,7 +21,13 @@ class NumericInput extends StatefulWidget {
 }
 
 class _NumericInputState extends State<NumericInput> {
-  int counter = 0;
+  late int counter = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    counter = widget.initialValue ?? widget.minValue;
+  }
 
   @override
   Widget build(BuildContext context) {

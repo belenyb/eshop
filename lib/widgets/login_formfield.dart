@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class LoginFormField extends StatelessWidget {
   final String? Function(String?)? validator;
+  final TextEditingController controller;
   final String labelText;
   final String hintText;
   const LoginFormField({
     Key? key,
     required this.theme,
     required this.validator,
+    required this.controller,
     required this.labelText,
     required this.hintText,
   }) : super(key: key);
@@ -18,6 +20,7 @@ class LoginFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: validator,
+      controller: controller,
       decoration: InputDecoration(
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(

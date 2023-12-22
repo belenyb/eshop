@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -16,16 +18,20 @@ class AppProvider extends ChangeNotifier {
 
   get cart => _cart;
 
+  String currentUsername = "";
+
   void addToCart(Item item, BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final isItemInCart = _cart.items.any((cartItem) => cartItem.id == item.id);
     if (isItemInCart) {
-      final SnackBar snackBar = getCartSnackbar(theme, 'error');
+      final SnackBar snackBar =
+          getSnackbar(theme, 'error', 'Item already in cart');
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
       _cart.items.add(item);
 
-      final SnackBar snackBar = getCartSnackbar(theme, 'success');
+      final SnackBar snackBar =
+          getSnackbar(theme, 'success', 'Item added to cart');
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
       notifyListeners();
@@ -56,6 +62,33 @@ class AppProvider extends ChangeNotifier {
 
     return formattedTotalPrice;
   }
+
+  Future<bool> login(body) async {
+    final url = Uri.https(baseUrl, '/auth/login');
+    try {
+      final Response response = await http.post(url,
+          headers: {
+            HttpHeaders.acceptHeader: 'application/json',
+            HttpHeaders.contentTypeHeader: 'application/json',
+          },
+          body: jsonEncode(body));
+      inspect(response);
+      switch (response.statusCode) {
+        case 200:
+          currentUsername = body["username"];
+          return true;
+
+        case 401:
+        default:
+          return false;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future getUserData() async {}
 
   Future<List> getCategories() async {
     final url = Uri.https(baseUrl, '/products/categories');

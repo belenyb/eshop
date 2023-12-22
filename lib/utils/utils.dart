@@ -19,7 +19,8 @@ getIcon(category) {
   }
 }
 
-SnackBar getCartSnackbar(ThemeData theme, String snackbarType) {
+SnackBar getSnackbar(
+    ThemeData theme, String snackbarType, String snackbarMessage) {
   return SnackBar(
     backgroundColor: snackbarType == 'error'
         ? theme.colorScheme.error
@@ -36,9 +37,7 @@ SnackBar getCartSnackbar(ThemeData theme, String snackbarType) {
               color: theme.colorScheme.onPrimary),
           const SizedBox(width: 8),
           Text(
-            snackbarType == 'error'
-                ? 'Item already in cart'
-                : 'Item added to cart',
+            snackbarMessage,
             style: theme.textTheme.titleMedium!
                 .copyWith(color: theme.colorScheme.onPrimary),
           ),

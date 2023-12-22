@@ -7,9 +7,9 @@ import '../widgets/product.dart';
 
 class ProductsByCategoryScreen extends StatelessWidget {
   final String category;
-  final AppProvider apiProvider;
+  final AppProvider appProvider;
   const ProductsByCategoryScreen(
-      {super.key, required this.category, required this.apiProvider});
+      {super.key, required this.category, required this.appProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder(
-          future: apiProvider.getProductsByCategory(category),
+          future: appProvider.getProductsByCategory(category),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

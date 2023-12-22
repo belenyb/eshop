@@ -1,9 +1,11 @@
 import 'package:ecommerce_app/resources/app_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cart.dart';
 import '../models/product.dart';
+import '../utils/utils.dart';
 import '../widgets/numeric_input.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -13,7 +15,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final AppProvider apiProvider =
+    final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     int productQuantity = 1;
     return Scaffold(
@@ -43,7 +45,7 @@ class ProductScreen extends StatelessWidget {
                       color: Colors.black12,
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    child: Text(product.category),
+                    child: Text(capitalize(product.category)),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -65,7 +67,23 @@ class ProductScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Text("⭐⭐⭐⭐⭐"),
+                      RatingBar.builder(
+                        initialRating: product.rating.rate,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 30,
+                        unratedColor: const Color.fromARGB(255, 189, 189, 189),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Color.fromARGB(255, 255, 213, 86),
+                        ),
+                        onRatingUpdate: (rating) {
+                          debugPrint("rating updated to: $rating");
+                        },
+                      ),
+                      const SizedBox(width: 8),
                       Text(product.rating.rate.toString()),
                       Text(" (${product.rating.count.toString()} ratings)"),
                     ],
@@ -94,7 +112,7 @@ class ProductScreen extends StatelessWidget {
                       'Add to cart',
                     ),
                     onPressed: () {
-                      apiProvider.addToCart(
+                      appProvider.addToCart(
                           Item(
                             id: product.id,
                             title: product.title,

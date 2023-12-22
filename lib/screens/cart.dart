@@ -12,14 +12,14 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final AppProvider apiProvider = Provider.of<AppProvider>(context);
+    final AppProvider appProvider = Provider.of<AppProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Cart")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: FutureBuilder(
-          future: apiProvider.getCart(),
+          future: appProvider.getCart(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -47,7 +47,7 @@ class CartScreen extends StatelessWidget {
                                 title: 'Are you sure?',
                                 content: 'All items in cart will be removed',
                                 onAction: () {
-                                  apiProvider.emptyCart();
+                                  appProvider.emptyCart();
                                   Navigator.pop(context);
                                 },
                                 onActionLabel: '🗑️ Empty cart',
@@ -136,7 +136,7 @@ class CartScreen extends StatelessWidget {
                                       NumericInput(
                                         initialValue: cartItem.quantity,
                                         onChanged: (value) {
-                                          apiProvider.updateItemQuantity(
+                                          appProvider.updateItemQuantity(
                                               cartItem.id, value);
                                         },
                                       ),
@@ -162,7 +162,7 @@ class CartScreen extends StatelessWidget {
             children: [
               Text("Total: ", style: theme.textTheme.titleMedium),
               Text(
-                "\$${apiProvider.getTotalPrice()}",
+                "\$${appProvider.getTotalPrice()}",
                 style: theme.textTheme.titleLarge,
               ),
             ],

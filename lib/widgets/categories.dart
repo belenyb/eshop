@@ -7,10 +7,10 @@ import '../utils/utils.dart';
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({
     Key? key,
-    required this.apiProvider,
+    required this.appProvider,
   }) : super(key: key);
 
-  final AppProvider apiProvider;
+  final AppProvider appProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CategoriesWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         FutureBuilder(
-          future: apiProvider.getCategories(),
+          future: appProvider.getCategories(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -40,7 +40,7 @@ class CategoriesWidget extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => ProductsByCategoryScreen(
                             category: snapshot.data[index],
-                            apiProvider: apiProvider,
+                            appProvider: appProvider,
                           ),
                         ),
                       ),

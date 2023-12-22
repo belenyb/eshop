@@ -5,8 +5,8 @@ import '../models/product.dart';
 import '../screens/product.dart';
 
 class FeaturedProduct extends StatelessWidget {
-  final AppProvider apiProvider;
-  const FeaturedProduct({super.key, required this.apiProvider});
+  final AppProvider appProvider;
+  const FeaturedProduct({super.key, required this.appProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class FeaturedProduct extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         FutureBuilder(
-          future: apiProvider.getFeaturedProduct(),
+          future: appProvider.getFeaturedProduct(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

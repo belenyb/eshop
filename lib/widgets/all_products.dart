@@ -5,16 +5,16 @@ import '../models/product.dart';
 import '../widgets/product.dart';
 
 class AllProducts extends StatelessWidget {
-  final AppProvider apiProvider;
+  final AppProvider appProvider;
   int? itemCount;
-  AllProducts({super.key, required this.apiProvider, this.itemCount});
+  AllProducts({super.key, required this.appProvider, this.itemCount});
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return itemCount != null
         ? FutureBuilder(
-            future: apiProvider.getProducts(),
+            future: appProvider.getProducts(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -38,7 +38,7 @@ class AllProducts extends StatelessWidget {
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: FutureBuilder(
-                future: apiProvider.getProducts(),
+                future: appProvider.getProducts(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());

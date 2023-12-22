@@ -14,7 +14,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO use ratings package for star rating in detail
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
@@ -27,9 +26,9 @@ class HomeScreen extends StatelessWidget {
         margin: const EdgeInsets.only(top: 16),
         child: ListView(
           children: [
-            FeaturedProduct(apiProvider: appProvider),
+            FeaturedProduct(appProvider: appProvider),
             const SizedBox(height: 32),
-            CategoriesWidget(apiProvider: appProvider),
+            CategoriesWidget(appProvider: appProvider),
             const SizedBox(height: 32),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AllProducts(
-                            apiProvider: appProvider,
+                            appProvider: appProvider,
                           ),
                         ),
                       ),
@@ -57,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                AllProducts(apiProvider: appProvider, itemCount: 5),
+                AllProducts(appProvider: appProvider, itemCount: 5),
               ],
             ),
           ],
@@ -124,7 +123,11 @@ class UserDrawer extends StatelessWidget {
             title: Text(user.phone),
             subtitle: const Text("Phone"),
           ),
-          // TODO use address to show location on google maps
+          ListTile(
+            title: Text(
+                "${capitalize(user.address.street)} ${user.address.number}, ${capitalize(user.address.city)}"),
+            subtitle: const Text("Address"),
+          ),
         ],
       ),
     );

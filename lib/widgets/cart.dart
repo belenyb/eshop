@@ -30,8 +30,8 @@ class CartButton extends StatelessWidget {
               size: 40,
             ),
             Consumer<AppProvider>(
-              builder: (context, apiProvider, child) {
-                final List<Item> cartItems = apiProvider.cart.items;
+              builder: (context, appProvider, child) {
+                final List<Item> cartItems = appProvider.cart.items;
 
                 int totalQuantity = 0;
                 for (var item in cartItems) {

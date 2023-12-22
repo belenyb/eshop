@@ -3,6 +3,7 @@ import 'package:ecommerce_app/widgets/numeric_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/cart.dart';
+import '../widgets/custom_dialog.dart';
 import 'home.dart';
 
 class CartScreen extends StatelessWidget {
@@ -36,8 +37,38 @@ class CartScreen extends StatelessWidget {
                       ],
                     ))
                   : Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        GestureDetector(
+                          onTap: () => showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialog(
+                                title: 'Are you sure?',
+                                content: 'All items in cart will be removed',
+                                onAction: () {
+                                  apiProvider.emptyCart();
+                                  Navigator.pop(context);
+                                },
+                                onActionLabel: '🗑️ Empty cart',
+                              );
+                            },
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.remove_shopping_cart_outlined,
+                                  color: theme.colorScheme.error),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Empty cart",
+                                style:
+                                    TextStyle(color: theme.colorScheme.error),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                         ListView.builder(
                           shrinkWrap: true,
                           itemCount: cartItems.length,
@@ -140,7 +171,25 @@ class CartScreen extends StatelessWidget {
             height: 8,
           ),
           GestureDetector(
-            onTap: () => _dialogBuilder(context),
+            onTap: () => showDialog<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomDialog(
+                    title: 'End of app 😊',
+                    content:
+                        'Feel free to click "Cancel" to resume from where you left off, or hit "Restart" for another attempt.',
+                    onActionLabel: '🔄 Restart',
+                    onAction: () {
+                      Provider.of<AppProvider>(context, listen: false).reset();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                        (route) => false,
+                      );
+                    },
+                  );
+                }),
             child: Container(
               padding: const EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width - 32,
@@ -164,44 +213,4 @@ class CartScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-}
-
-Future<void> _dialogBuilder(BuildContext context) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-          title: const Text('End of app 😊'),
-          content: const Text(
-            'Feel free to click "Cancel" to resume from where you left off, or hit "Restart" for another attempt.',
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('❌ Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('🔄 Restart'),
-              onPressed: () {
-                Provider.of<AppProvider>(context, listen: false).reset();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  (route) => false,
-                );
-              },
-            ),
-          ],
-          actionsAlignment: MainAxisAlignment.spaceBetween,
-          actionsPadding: const EdgeInsets.symmetric(horizontal: 16));
-    },
-  );
 }

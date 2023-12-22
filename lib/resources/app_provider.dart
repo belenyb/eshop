@@ -9,6 +9,7 @@ import 'package:http/http.dart';
 
 import '../models/cart.dart';
 import '../models/product.dart';
+import '../models/user.dart';
 import '../utils/utils.dart';
 
 class AppProvider extends ChangeNotifier {
@@ -18,7 +19,7 @@ class AppProvider extends ChangeNotifier {
 
   get cart => _cart;
 
-  String currentUsername = "";
+  late User currentUserData;
 
   void addToCart(Item item, BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -47,6 +48,11 @@ class AppProvider extends ChangeNotifier {
     }
   }
 
+  void emptyCart() {
+    _cart.items = [];
+    notifyListeners();
+  }
+
   String getTotalPrice() {
     double totalPrice = 0.0;
 
@@ -72,10 +78,9 @@ class AppProvider extends ChangeNotifier {
             HttpHeaders.contentTypeHeader: 'application/json',
           },
           body: jsonEncode(body));
-      inspect(response);
       switch (response.statusCode) {
         case 200:
-          currentUsername = body["username"];
+          currentUserData = await getUserData(body["username"]);
           return true;
 
         case 401:
@@ -88,7 +93,26 @@ class AppProvider extends ChangeNotifier {
     }
   }
 
-  Future getUserData() async {}
+  Future<dynamic> getUserData(currentUsername) async {
+    final url = Uri.https(baseUrl, '/users');
+    try {
+      final Response response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<User> allUsers = [];
+
+        final decodedResponse = json.decode(response.body);
+        for (var user in decodedResponse) {
+          allUsers.add(User.fromJson(user));
+        }
+        final currentUserData =
+            allUsers.firstWhere((user) => user.username == currentUsername);
+        return currentUserData;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return 'No user found';
+    }
+  }
 
   Future<List> getCategories() async {
     final url = Uri.https(baseUrl, '/products/categories');

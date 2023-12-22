@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user.dart';
 import '../resources/app_provider.dart';
+import '../utils/utils.dart';
 import '../widgets/all_products.dart';
 import '../widgets/cart.dart';
 import '../widgets/categories.dart';
@@ -12,34 +14,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO crear login y conectarlo al de fakeapi
     // TODO use ratings package for star rating in detail
-    // TODO empty cart button + functionality
-    final AppProvider apiProvider =
+    final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Image.asset(
-          'assets/images/eshop-logo.png',
-          fit: BoxFit.fitHeight,
-          height: 70,
-        ),
-        backgroundColor: const Color(0xfff4f4f4),
-        elevation: 0,
-        actions: const [
-          CartButton(),
-          SizedBox(width: 16),
-        ],
-      ),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: MyAppBar(appProvider: appProvider)),
+      endDrawer: UserDrawer(user: appProvider.currentUserData),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 16),
         child: ListView(
           children: [
-            FeaturedProduct(apiProvider: apiProvider),
+            FeaturedProduct(apiProvider: appProvider),
             const SizedBox(height: 32),
-            CategoriesWidget(apiProvider: apiProvider),
+            CategoriesWidget(apiProvider: appProvider),
             const SizedBox(height: 32),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AllProducts(
-                            apiProvider: apiProvider,
+                            apiProvider: appProvider,
                           ),
                         ),
                       ),
@@ -67,12 +57,111 @@ class HomeScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                AllProducts(apiProvider: apiProvider, itemCount: 5),
+                AllProducts(apiProvider: appProvider, itemCount: 5),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class UserDrawer extends StatelessWidget {
+  final User user;
+  const UserDrawer({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            height: 150,
+            decoration: BoxDecoration(color: theme.primaryColor),
+            child: Center(
+              child: DrawerHeader(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      color: theme.colorScheme.onPrimary,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 8),
+                    Text('Profile information',
+                        style: theme.textTheme.titleLarge!
+                            .copyWith(color: theme.colorScheme.onPrimary)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ListTile(
+            title: Text(capitalize(user.name.firstname)),
+            subtitle: const Text("Name"),
+          ),
+          ListTile(
+            title: Text(capitalize(user.name.lastname)),
+            subtitle: const Text("Lastname"),
+          ),
+          ListTile(
+            title: Text("@${user.username}"),
+            subtitle: const Text("Username"),
+          ),
+          ListTile(
+            title: Text(user.email),
+            subtitle: const Text("Email"),
+          ),
+          ListTile(
+            title: Text(user.phone),
+            subtitle: const Text("Phone"),
+          ),
+          // TODO use address to show location on google maps
+        ],
+      ),
+    );
+  }
+}
+
+class MyAppBar extends StatelessWidget {
+  final AppProvider appProvider;
+  const MyAppBar({
+    Key? key,
+    required this.appProvider,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: false,
+      automaticallyImplyLeading: false,
+      title: Image.asset(
+        'assets/images/eshop-logo.png',
+        fit: BoxFit.fitHeight,
+        height: 60,
+      ),
+      backgroundColor: const Color(0xfff4f4f4),
+      elevation: 0,
+      actions: [
+        const CartButton(),
+        GestureDetector(
+          onTap: () => Scaffold.of(context).openEndDrawer(),
+          child: const Icon(
+            Icons.person_outline,
+            color: Colors.black,
+            size: 40,
+          ),
+        ),
+        const SizedBox(width: 16),
+      ],
     );
   }
 }

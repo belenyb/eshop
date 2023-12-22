@@ -16,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  static final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -28,7 +29,6 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
-    final formKey = GlobalKey<FormState>();
     final ThemeData theme = Theme.of(context);
 
     return Scaffold(

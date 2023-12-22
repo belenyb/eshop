@@ -52,7 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(16),
                       child: LoginFormField(
                         theme: theme,
                         validator: (value) {
@@ -67,7 +67,7 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(16),
                         child: LoginFormField(
                           theme: theme,
                           controller: passwordController,
@@ -85,21 +85,43 @@ class LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          final Map<String, String> loginBody = {
-                            "username": emailController.text,
-                            "password": passwordController.text
-                          };
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                          try {
+                            final Map<String, String> loginBody = {
+                              "username": emailController.text,
+                              "password": passwordController.text
+                            };
 
-                          final isLoginOk = await appProvider.login(loginBody);
+                            final isLoginOk =
+                                await appProvider.login(loginBody);
 
-                          if (isLoginOk && mounted) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const HomeScreen()));
-                          } else {
-                            final SnackBar snackBar = getSnackbar(
-                                theme, 'error', 'Wrong credentials');
+                            if (mounted) Navigator.pop(context);
+
+                            if (isLoginOk && mounted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const HomeScreen()));
+                            } else {
+                              final SnackBar snackBar = getSnackbar(
+                                  theme, 'error', 'Wrong credentials');
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          } catch (e) {
+                            // Handle errors and close the dialog
+                            debugPrint('Login error: $e');
+                            Navigator.pop(context);
+                            final SnackBar snackBar = getSnackbar(theme,
+                                'error', 'An error occurred during login');
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }

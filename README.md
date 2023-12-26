@@ -64,3 +64,8 @@ The screen includes additional product information and provides an "Add to Cart"
 Add, remove, update, or empty all items using the [provider](https://pub.dev/packages/provider) package. The shopping cart employs the dismissible effect for easy item removal.
 
 <img src="assets/docs/cart.gif" height=450 alt="Cart screen" />
+
+### End of app
+The conclusion of the app is marked by the presence of the `Buy now` button. At this point, you have the choice to either go back to the cart or start fresh by using the `Restart` button. This button clears all app data, giving you a clean slate for further testing.
+
+<img src="assets/docs/buynow.png" height=450 alt="End of app dialog" />

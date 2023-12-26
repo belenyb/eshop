@@ -46,7 +46,7 @@ password: "m38rmF$"
 <img src="assets/docs/login.gif" height=450 alt="Login screen" />
 
 ### Home
-The home screen starts with a featured product randomly selected using the `getFeaturedProduct()` function inside the `app_provider.dart` file. This function utilizes a random number generator from the [dart:math ](https://api.dart.dev/stable/3.2.3/dart-math/dart-math-library.html) library. Featured products use hero animation for a smooth transition between screens. The main page also contains a categories filter and a short list of products that can be expanded by clicking on the `SEE ALL` button.
+The home screen starts with a featured product randomly selected using the `getFeaturedProduct()` function inside the `app_provider.dart` file. This function utilizes a random number generator from the [dart:math](https://api.dart.dev/stable/3.2.3/dart-math/dart-math-library.html) library. Featured products use hero animation for a smooth transition between screens. The main page also contains a categories filter and a short list of products that can be expanded by clicking on the `SEE ALL` button.
 
 <img src="assets/docs/home.gif" height=450 alt="Home screen" />
 

@@ -2,7 +2,7 @@
 
 An online shopping app connected to a public API.
 
-<img src="assets/images/eshop-logo.png" alt="App Logo" width="200">
+<img src="assets/docs/cover.png" alt="App Logo" width="400">
 
 ## Overview
 

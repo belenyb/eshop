@@ -4,9 +4,9 @@ class CustomDialog extends StatelessWidget {
   final String title;
   final String content;
   final String onActionLabel;
-  void Function()? onAction;
+  final void Function()? onAction;
 
-  CustomDialog(
+  const CustomDialog(
       {Key? key,
       required this.title,
       required this.content,

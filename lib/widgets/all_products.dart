@@ -6,8 +6,8 @@ import '../widgets/product.dart';
 
 class AllProducts extends StatelessWidget {
   final AppProvider appProvider;
-  int? itemCount;
-  AllProducts({super.key, required this.appProvider, this.itemCount});
+  final int? itemCount;
+  const AllProducts({super.key, required this.appProvider, this.itemCount});
 
   @override
   Widget build(BuildContext context) {

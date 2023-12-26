@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'resources/app_provider.dart';
+import 'screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xfff4f4f4),
           appBarTheme: const AppBarTheme(elevation: 0),
         ),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

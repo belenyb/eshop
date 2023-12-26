@@ -31,56 +31,54 @@ class _NumericInputState extends State<NumericInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: const Icon(
-              Icons.keyboard_arrow_up,
-            ),
-            padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter < widget.maxValue) {
-                  counter++;
-                }
-                widget.onChanged(counter);
-              });
-            },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_up,
           ),
-          Text(
-            '$counter',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+          padding:
+              const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+          iconSize: 32.0,
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            setState(() {
+              if (counter < widget.maxValue) {
+                counter++;
+              }
+              widget.onChanged(counter);
+            });
+          },
+        ),
+        Text(
+          '$counter',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.black87,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w500,
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.keyboard_arrow_down,
-            ),
-            padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter > widget.minValue) {
-                  counter--;
-                }
-                widget.onChanged(counter);
-              });
-            },
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_down,
           ),
-        ],
-      ),
+          padding:
+              const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+          iconSize: 32.0,
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            setState(() {
+              if (counter > widget.minValue) {
+                counter--;
+              }
+              widget.onChanged(counter);
+            });
+          },
+        ),
+      ],
     );
   }
 }

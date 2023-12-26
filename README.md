@@ -6,7 +6,7 @@ An online shopping app connected to a public API.
 
 ## Overview
 
-This Flutter app is an e-commerce application that enables users to browse and shop for products from the FakeStore API. The app features a user authentication system, product listings, a shopping cart, and various UI elements to enhance the user experience.
+This Flutter app is an e-commerce application that enables users to browse and shop for products from the [FakeStore API](https://fakestoreapi.com/). The app features a user authentication system, product listings, a shopping cart, and various UI elements to enhance the user experience.
 
 ## Installation
 
@@ -33,6 +33,8 @@ This Flutter app is an e-commerce application that enables users to browse and s
 ### Splash Screen
 The splash screen uses a Stateful Widget and AnimatedBuilder to create a loading effect.
 
+![Splash screen](assets/docs/splashscreen.gif)
+
 ### Login
 User authentication is implemented via the FakeStore API login service. Form validation is included.
 
@@ -42,14 +44,25 @@ username: "johnd"
 password: "m38rmF$"
 ```
 
+![Login screen](assets/docs/login.gif)
+
+
 ### Home
 The home screen starts with a featured product randomly selected using the `getFeaturedProduct()` function inside the `app_provider.dart` file. This function utilizes a random number generator from the [dart:math ](https://api.dart.dev/stable/3.2.3/dart-math/dart-math-library.html) library. Featured products use hero animation for a smooth transition between screens. The main page also contains a categories filter and a short list of products that can be expanded by clicking on the `SEE ALL` button.
+
+![Home screen](assets/docs/home.gif)
 
 ### Profile drawer
 By clicking on the profile icon in the app bar, users can access the profile drawer. This information is also obtained from the public API.
 
+![Profile screen](assets/docs/profile.png)
+
 ### Product detail
 The screen includes additional product information and provides an "Add to Cart" functionality. When the user adds an item to the cart, a `View Cart` button is provided as a shortcut. This screen also includes rating stars using the [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar) package.
 
+![Product screen](assets/docs/product.gif)
+
 ### Cart
 Add, remove, update, or empty all items using the [provider](https://pub.dev/packages/provider) package. The shopping cart employs the dismissible effect for easy item removal.
+
+![Cart screen](assets/docs/cart.gif)

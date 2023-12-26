@@ -69,148 +69,180 @@ class CartScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: cartItems.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final Item cartItem = cartItems[index];
-                            return Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(8)),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade300,
-                                            offset: const Offset(2, 2),
-                                            spreadRadius: 1,
-                                            blurRadius: 16)
-                                      ]),
-                                  padding: const EdgeInsets.all(16),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Expanded(
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cartItems.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Item cartItem = cartItems[index];
+                              return Column(
+                                children: [
+                                  Dismissible(
+                                    key: Key(cartItem.id.toString()),
+                                    onDismissed: (direction) {
+                                      appProvider.removeItem(cartItem.id);
+                                    },
+                                    background: Container(
+                                      color: theme.colorScheme.error,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              child: Image.network(
-                                                cartItem.image,
-                                                width: 60,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: const [
+                                              Icon(
+                                                Icons.delete_outline,
+                                                size: 30,
+                                                color: Colors.white,
                                               ),
-                                            ),
-                                            const SizedBox(width: 16),
-                                            Flexible(
-                                              flex: 2,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    cartItem.title,
-                                                    style: theme
-                                                        .textTheme.titleMedium,
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  Text(
-                                                    "\$${cartItem.price.toString()}",
-                                                    style: theme
-                                                        .textTheme.bodyLarge!
-                                                        .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                            ]),
                                       ),
-                                      NumericInput(
-                                        initialValue: cartItem.quantity,
-                                        onChanged: (value) {
-                                          appProvider.updateItemQuantity(
-                                              cartItem.id, value);
-                                        },
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                offset: const Offset(2, 2),
+                                                spreadRadius: 1,
+                                                blurRadius: 16)
+                                          ]),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Flexible(
+                                                  child: Image.network(
+                                                    cartItem.image,
+                                                    width: 60,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 16),
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        cartItem.title,
+                                                        style: theme.textTheme
+                                                            .titleMedium,
+                                                      ),
+                                                      const SizedBox(height: 8),
+                                                      Text(
+                                                        "\$${cartItem.price.toString()}",
+                                                        style: theme.textTheme
+                                                            .bodyLarge!
+                                                            .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          NumericInput(
+                                            initialValue: cartItem.quantity,
+                                            onChanged: (value) {
+                                              appProvider.updateItemQuantity(
+                                                  cartItem.id, value);
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
-                          },
+                                  const SizedBox(height: 16),
+                                ],
+                              );
+                            },
+                          ),
                         ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.12)
                       ],
                     );
             }
           },
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Total: ", style: theme.textTheme.titleMedium),
-              Text(
-                "\$${appProvider.getTotalPrice()}",
-                style: theme.textTheme.titleLarge,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          GestureDetector(
-            onTap: () => showDialog<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return CustomDialog(
-                    title: 'End of app 😊',
-                    content:
-                        'Feel free to click "Cancel" to resume from where you left off, or hit "Restart" for another attempt.',
-                    onActionLabel: '🔄 Restart',
-                    onAction: () {
-                      Provider.of<AppProvider>(context, listen: false).reset();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
-                        (route) => false,
-                      );
-                    },
-                  );
-                }),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              width: MediaQuery.of(context).size.width - 32,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
+      floatingActionButton: Container(
+        color: const Color.fromARGB(199, 244, 244, 244),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Total: ", style: theme.textTheme.titleMedium),
+                Text(
+                  "\$${appProvider.getTotalPrice()}",
+                  style: theme.textTheme.titleLarge,
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  "Buy now",
-                  style: theme.textTheme.titleMedium!
-                      .copyWith(color: theme.colorScheme.onPrimary),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            GestureDetector(
+              onTap: () => showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialog(
+                      title: 'End of app 😊',
+                      content:
+                          'Feel free to click "Cancel" to resume from where you left off, or hit "Restart" for another attempt.',
+                      onActionLabel: '🔄 Restart',
+                      onAction: () {
+                        Provider.of<AppProvider>(context, listen: false)
+                            .reset();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
+                          (route) => false,
+                        );
+                      },
+                    );
+                  }),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                width: MediaQuery.of(context).size.width - 32,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Buy now",
+                    style: theme.textTheme.titleMedium!
+                        .copyWith(color: theme.colorScheme.onPrimary),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

@@ -22,7 +22,7 @@ class ProductScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Detail")),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -32,16 +32,20 @@ class ProductScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 16),
                     Center(
-                      child: Image.network(
-                        product.image,
-                        height: 300,
+                      child: Hero(
+                        tag: 'productWidgetImage',
+                        child: Image.network(
+                          product.image,
+                          height: MediaQuery.of(context).size.height * 0.25,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 6),
                       decoration: const BoxDecoration(
                         color: Colors.black12,
                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -75,7 +79,8 @@ class ProductScreen extends StatelessWidget {
                           allowHalfRating: true,
                           itemCount: 5,
                           itemSize: 30,
-                          unratedColor: const Color.fromARGB(255, 189, 189, 189),
+                          unratedColor:
+                              const Color.fromARGB(255, 189, 189, 189),
                           itemBuilder: (context, _) => const Icon(
                             Icons.star,
                             color: Color.fromARGB(255, 255, 213, 86),
@@ -94,12 +99,12 @@ class ProductScreen extends StatelessWidget {
                       product.description,
                       style: theme.textTheme.caption,
                     ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

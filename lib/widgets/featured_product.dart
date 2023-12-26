@@ -70,9 +70,12 @@ class FeaturedProduct extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Flexible(
-                        child: Image.network(
-                          product.image,
-                          width: 200,
+                        child: Hero(
+                          tag: 'productWidgetImage',
+                          child: Image.network(
+                            product.image,
+                            width: 200,
+                          ),
                         ),
                       ),
                     ],

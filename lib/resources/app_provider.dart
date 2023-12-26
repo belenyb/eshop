@@ -10,6 +10,7 @@ import 'package:http/http.dart';
 import '../models/cart.dart';
 import '../models/product.dart';
 import '../models/user.dart';
+import '../screens/cart.dart';
 import '../utils/utils.dart';
 
 class AppProvider extends ChangeNotifier {
@@ -31,8 +32,19 @@ class AppProvider extends ChangeNotifier {
     } else {
       _cart.items.add(item);
 
-      final SnackBar snackBar =
-          getSnackbar(theme, 'success', 'Item added to cart');
+      final SnackBar snackBar = getSnackbar(
+        theme,
+        'success',
+        'Item added to cart',
+        action: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CartScreen(),
+            ),
+          );
+        },
+      );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
       notifyListeners();
@@ -46,6 +58,12 @@ class AppProvider extends ChangeNotifier {
       _cart.items[itemIndex].quantity = newQuantity;
       notifyListeners();
     }
+  }
+
+  void removeItem(int itemId) {
+    final itemIndex = _cart.items.indexWhere((item) => item.id == itemId);
+    _cart.items.removeAt(itemIndex);
+    notifyListeners();
   }
 
   void emptyCart() {

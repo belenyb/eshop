@@ -33,7 +33,7 @@ This Flutter app is an e-commerce application that enables users to browse and s
 ### Splash Screen
 The splash screen uses a Stateful Widget and AnimatedBuilder to create a loading effect.
 
-<img src="assets/docs/splashscreen.gif" height=300 alt="Splash screen" />
+<img src="assets/docs/splashscreen.gif" height="300" alt="Splash screen" />
 
 ### Login
 User authentication is implemented via the FakeStore API login service. Form validation is included.
@@ -43,7 +43,7 @@ User authentication is implemented via the FakeStore API login service. Form val
 username: "johnd"
 password: "m38rmF$"
 ```
-<img src="assets/docs/login.gif" height=300 alt="Login screen" />
+<img src="assets/docs/login.gif" height="300" alt="Login screen" />
 
 ### Home
 The home screen starts with a featured product randomly selected using the `getFeaturedProduct()` function inside the `app_provider.dart` file. This function utilizes a random number generator from the [dart:math ](https://api.dart.dev/stable/3.2.3/dart-math/dart-math-library.html) library. Featured products use hero animation for a smooth transition between screens. The main page also contains a categories filter and a short list of products that can be expanded by clicking on the `SEE ALL` button.

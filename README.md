@@ -27,7 +27,6 @@ This Flutter app is an e-commerce application that enables users to browse and s
    ```bash
     flutter run
 
-
 ## Features
 
 ### Splash Screen

@@ -43,9 +43,8 @@ User authentication is implemented via the FakeStore API login service. Form val
 username: "johnd"
 password: "m38rmF$"
 ```
-<p align="center">
-   <img src="assets/docs/login.gif" width=200 height=auto alt="Login screen" />
-</p>
+
+<img src="assets/docs/login.gif" width=200 height=auto alt="Login screen" />
 
 ### Home
 The home screen starts with a featured product randomly selected using the `getFeaturedProduct()` function inside the `app_provider.dart` file. This function utilizes a random number generator from the [dart:math](https://api.dart.dev/stable/3.2.3/dart-math/dart-math-library.html) library. Featured products use hero animation for a smooth transition between screens. The main page also contains a categories filter and a short list of products that can be expanded by clicking on the `SEE ALL` button.

@@ -33,7 +33,7 @@ This Flutter app is an e-commerce application that enables users to browse and s
 ### Splash Screen
 The splash screen uses a Stateful Widget and AnimatedBuilder to create a loading effect.
 
-<img src="assets/docs/splashscreen.gif" height=450 alt="Splash screen" />
+<img src="assets/docs/splashscreen.gif" width=300 height=auto alt="Splash screen" />
 
 ### Login
 User authentication is implemented via the FakeStore API login service. Form validation is included.
